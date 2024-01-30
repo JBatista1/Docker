@@ -13,6 +13,8 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
       - internal_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   wordpress1:
     image: wordpress:5.4.2-php7.2-apache
@@ -27,6 +29,7 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - internal_network
+      - mysql_network
 
   wordpress2:
     image: wordpress:5.4.2-php7.2-apache
@@ -41,6 +44,7 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - internal_network
+      - mysql_network
 
   wordpress3:
     image: wordpress:5.4.2-php7.2-apache
@@ -55,6 +59,7 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - internal_network
+      - mysql_network
 
   mysql:
     image: mysql:5.7
@@ -64,7 +69,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
-      - internal_network
+      - mysql_network
 
   locust:
       image: grubykarol/locust
@@ -75,10 +80,12 @@ services:
       ports:
         - "8089:8089"
       networks:
-      - internal_network
+        - internal_network
         
 networks:
   internal_network:
+    driver: bridge
+  mysql_network:
     driver: bridge
 
 volumes:
