@@ -69,7 +69,7 @@ services:
   locust:
       image: grubykarol/locust
       environment:
-        - ATTACKED_HOST=http://localhost:80
+        - ATTACKED_HOST=http://nginx:80
       volumes:
         - ./path/to/locust-scripts:/locust
       ports:
