@@ -6,7 +6,3 @@ class MyUser(HttpUser):
     @task
     def visit_homepage(self):
         self.client.get("/")
-
-    @task
-    def visit_about_page(self):
-        self.client.get("/about")
