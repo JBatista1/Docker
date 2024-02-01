@@ -13,13 +13,49 @@ rem Aguardar alguns segundos para garantir que os serviços estejam totalmente i
 timeout /t 10
 
 rem Iniciar a tarefa no Locust com os parâmetros especificados
-locust -f .\path\to\locust-scripts\locustfile.py --headless -u 450 -r 10 -t 1m --csv result --host=http://localhost:80
+locust -f .\path\to\locust-scripts\locustfile.py --headless -u 300 -r 10 -t 5m --csv result --host=http://localhost:80
 
 rem Criar uma pasta com o nome formatado que inclui a hora atual
-mkdir analysis_results_%formatted_datetime%
+mkdir analysis_results_%formatted_datetime%_300_user
 
 rem Mover os arquivos de análise para a pasta criada
-move .\*.csv analysis_results_%formatted_datetime%\
+move .\*.csv analysis_results_%formatted_datetime%_300_user\
+
+rem Encerrar os serviços do Docker Compose
+docker-compose down
+
+rem Iniciar o Docker Compose
+docker-compose up -d
+
+rem Aguardar alguns segundos para garantir que os serviços estejam totalmente iniciados
+timeout /t 10
+
+rem Iniciar a tarefa no Locust com os parâmetros especificados
+locust -f .\path\to\locust-scripts\locustfile.py --headless -u 200 -r 10 -t 5m --csv result --host=http://localhost:80
+
+rem Criar uma pasta com o nome formatado que inclui a hora atual
+mkdir analysis_results_%formatted_datetime%_200_user
+
+rem Mover os arquivos de análise para a pasta criada
+move .\*.csv analysis_results_%formatted_datetime%_200_user
+
+rem Encerrar os serviços do Docker Compose
+docker-compose down
+
+rem Iniciar o Docker Compose
+docker-compose up -d
+
+rem Aguardar alguns segundos para garantir que os serviços estejam totalmente iniciados
+timeout /t 10
+
+rem Iniciar a tarefa no Locust com os parâmetros especificados
+locust -f .\path\to\locust-scripts\locustfile.py --headless -u 100 -r 10 -t 5m --csv result --host=http://localhost:80
+
+rem Criar uma pasta com o nome formatado que inclui a hora atual
+mkdir analysis_results_%formatted_datetime%_100_user
+
+rem Mover os arquivos de análise para a pasta criada
+move .\*.csv analysis_results_%formatted_datetime%_100_user
 
 rem Encerrar os serviços do Docker Compose
 docker-compose down
