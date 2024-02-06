@@ -7,6 +7,7 @@ set array[1]=200
 set array[2]=300
 set array[3]=400
 set array[4]=500
+set array[5]=650
 
 rem Definir uma variável de ambiente para armazenar a hora atual
 for /f "delims=" %%a in ('wmic OS Get localdatetime ^| find "."') do set datetime=%%a
@@ -15,7 +16,7 @@ rem Formatar a hora atual para incluir apenas caracteres válidos em nomes de di
 set formatted_datetime=!datetime:~0,4!-!datetime:~4,2!-!datetime:~6,2!_!datetime:~8,2!-!datetime:~10,2!
 
 :: Acessando e exibindo os valores do array
-for /l %%i in (0,1,4) do (
+for /l %%i in (0,1,5) do (
     set /a numeroDeUsuarios=!array[%%i]!
 
     rem Iniciar o Docker Compose
